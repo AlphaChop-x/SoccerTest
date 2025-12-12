@@ -6,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Класс ответа с ошибкой
+ */
 public class CustomErrorResponse {
     /**
      * Время выброса ошибки

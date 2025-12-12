@@ -8,7 +8,9 @@ import org.example.soccerplayerscatalog30.entity.entityEnums.State;
 
 import java.time.LocalDate;
 
-
+/**
+ * Дто, содержащее информацию о игроке
+ */
 public class ResponsePlayerDto {
 
     /**

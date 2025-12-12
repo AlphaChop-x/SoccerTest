@@ -1,7 +1,7 @@
 package org.example.soccerplayerscatalog30.controller;
 
 import jakarta.validation.Valid;
-import org.example.soccerplayerscatalog30.controller.dto.EntityToResponseMapper;
+import org.example.soccerplayerscatalog30.controller.dto.PlayerMapper;
 import org.example.soccerplayerscatalog30.controller.dto.PlayerFieldsActualizer;
 import org.example.soccerplayerscatalog30.controller.dto.request.RequestPlayerDto;
 import org.example.soccerplayerscatalog30.controller.dto.request.RequestPlayerUpdateDto;
@@ -27,18 +27,18 @@ public class PlayerController {
     private final PlayerService playerService;
     private final TeamService teamService;
     private final PlayerFieldsActualizer fieldsActualizer;
-    private final EntityToResponseMapper entityToResponseMapper;
+    private final PlayerMapper playerMapper;
 
     public PlayerController(
             PlayerService playerService,
             TeamService teamService,
             PlayerFieldsActualizer fieldsActualizer,
-            EntityToResponseMapper entityToResponseMapper
+            PlayerMapper playerMapper
     ) {
         this.playerService = playerService;
         this.teamService = teamService;
         this.fieldsActualizer = fieldsActualizer;
-        this.entityToResponseMapper = entityToResponseMapper;
+        this.playerMapper = playerMapper;
     }
 
     /**
@@ -49,15 +49,25 @@ public class PlayerController {
     @GetMapping
     public List<ResponsePlayerDto> getAllPlayers() {
         return playerService.findAll()
-                .stream().map(entityToResponseMapper::convertToResponseFromEntity).toList();
+                .stream().map(playerMapper::convertToResponseFromEntity).toList();
     }
 
+    /**
+     * Метод для получения игрока по id
+     *
+     * @param playerId уникальный идентификатор игрока
+     * @return возвращается {@link ResponsePlayerDto} дто с данными о игроке
+     */
     @GetMapping("/{playerId}")
     public ResponsePlayerDto getPlayer(
             @PathVariable Long playerId
     ) {
-        return entityToResponseMapper.convertToResponseFromEntity(
-                playerService.getPlayerById(playerId).orElse(null)
+        return playerMapper.convertToResponseFromEntity(
+                playerService.getPlayerById(playerId)
+                        .orElseThrow(
+                                () -> new CustomNotExistException(
+                                        "Игрока по переданному id: %d не существует".formatted(playerId))
+                        )
         );
     }
 
@@ -75,7 +85,6 @@ public class PlayerController {
 
         FootballTeam team = teamService.findTeamByName(newPlayer.getTeamName())
                 .orElseGet(() -> teamService.createTeam(newPlayer.getTeamName()));
-
 
         FootballPlayer player = new FootballPlayer(
                 newPlayer.getFirstName(),
@@ -114,6 +123,6 @@ public class PlayerController {
 
         fieldsActualizer.actualizeFields(player, updateDto, team);
 
-        return entityToResponseMapper.convertToResponseFromEntity(playerService.update(player));
+        return playerMapper.convertToResponseFromEntity(playerService.update(player));
     }
 }

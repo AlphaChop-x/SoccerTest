@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Класс, выполняющий валидацию enum-ов
+ */
 public class ValueOfEnumValidator implements ConstraintValidator<ValueOfEnum, String> {
     private List<String> acceptedValues;
 

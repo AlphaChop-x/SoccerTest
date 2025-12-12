@@ -1,6 +1,12 @@
 package org.example.soccerplayerscatalog30.controller.dto.response;
 
+/**
+ * Дто, содержащее информацию о команде
+ */
 public class ResponseTeamDto {
+    /**
+     * Имя команды
+     */
     private String teamName;
 
     public ResponseTeamDto(String teamName) {

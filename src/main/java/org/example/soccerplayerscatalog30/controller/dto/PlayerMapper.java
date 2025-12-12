@@ -4,9 +4,18 @@ import org.example.soccerplayerscatalog30.controller.dto.response.ResponsePlayer
 import org.example.soccerplayerscatalog30.entity.FootballPlayer;
 import org.springframework.stereotype.Component;
 
+/**
+ * Маппер, конвертирующий сущность пользователя в дто ответ
+ */
 @Component
-public class EntityToResponseMapper {
+public class PlayerMapper {
 
+    /**
+     * Метод, принимающий сущность игрока и возвращающий {@link ResponsePlayerDto}
+     *
+     * @param entity сущность игрока, полученая из бд
+     * @return смапленная сущность в дто
+     */
     public ResponsePlayerDto convertToResponseFromEntity(
             FootballPlayer entity
     ) {

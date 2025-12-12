@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Сервис для управления командами
+ */
 @Service
 public class TeamService {
 
@@ -16,6 +19,11 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
+    /**
+     * Метод для поиска команды по её имени
+     *
+     * @param teamName имя команды
+     */
     public Optional<FootballTeam> findTeamByName(String teamName) {
         return teamRepository.getFootballTeamByTeamName(teamName);
     }
@@ -31,6 +39,11 @@ public class TeamService {
         return teamRepository.save(team);
     }
 
+    /**
+     * Метод для получения списка всех команд
+     *
+     * @return возвращает список всех существующих в системе команд
+     */
     public List<FootballTeam> getAll() {
         return (List<FootballTeam>) teamRepository.findAll();
     }

@@ -5,8 +5,14 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
+/**
+ * Репозиторий для работы с футбольными командами
+ */
 public interface FootballTeamRepository extends CrudRepository<FootballTeam, Long> {
-    boolean existsByTeamName(String teamName);
-
+    /**
+     * Находит футбольную команду по её имени
+     *
+     * @param teamName имя команды
+     */
     Optional<FootballTeam> getFootballTeamByTeamName(String teamName);
 }

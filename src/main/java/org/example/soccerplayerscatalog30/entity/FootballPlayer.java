@@ -5,6 +5,7 @@ import org.example.soccerplayerscatalog30.entity.entityEnums.Gender;
 import org.example.soccerplayerscatalog30.entity.entityEnums.State;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Сущность футболиста
@@ -50,6 +51,18 @@ public class FootballPlayer {
      */
     @Enumerated(EnumType.STRING)
     private State state;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        FootballPlayer player = (FootballPlayer) o;
+        return Objects.equals(firstName, player.firstName) && Objects.equals(sureName, player.sureName) && Objects.equals(dateOfBirth, player.dateOfBirth);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, sureName, dateOfBirth);
+    }
 
     public FootballPlayer() {
     }

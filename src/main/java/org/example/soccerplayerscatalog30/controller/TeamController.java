@@ -1,6 +1,6 @@
 package org.example.soccerplayerscatalog30.controller;
 
-import org.example.soccerplayerscatalog30.controller.dto.EntityToResponseTeamMapper;
+import org.example.soccerplayerscatalog30.controller.dto.TeamMapper;
 import org.example.soccerplayerscatalog30.controller.dto.request.RequestTeamDto;
 import org.example.soccerplayerscatalog30.controller.dto.response.ResponseTeamDto;
 import org.example.soccerplayerscatalog30.entity.FootballTeam;
@@ -16,9 +16,9 @@ import java.util.List;
 @RequestMapping("api/teams")
 public class TeamController {
     private final TeamService teamService;
-    private final EntityToResponseTeamMapper teamMapper;
+    private final TeamMapper teamMapper;
 
-    public TeamController(TeamService teamService, EntityToResponseTeamMapper teamMapper) {
+    public TeamController(TeamService teamService, TeamMapper teamMapper) {
         this.teamService = teamService;
         this.teamMapper = teamMapper;
     }

@@ -6,6 +6,9 @@ import org.example.soccerplayerscatalog30.entity.entityEnums.State;
 
 import java.time.LocalDate;
 
+/**
+ * Дто для обновления полей игрока
+ */
 public class RequestPlayerUpdateDto {
     /**
      * Имя игрока

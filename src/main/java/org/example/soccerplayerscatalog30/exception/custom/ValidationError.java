@@ -1,5 +1,8 @@
 package org.example.soccerplayerscatalog30.exception.custom;
 
+/**
+ * Валидационная ошибка.
+ */
 public class ValidationError {
     private String field;
     private String message;

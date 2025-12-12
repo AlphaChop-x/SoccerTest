@@ -1,6 +1,5 @@
 package org.example.soccerplayerscatalog30.controller.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.example.soccerplayerscatalog30.controller.validation.ValueOfEnum;
@@ -9,6 +8,9 @@ import org.example.soccerplayerscatalog30.entity.entityEnums.State;
 
 import java.time.LocalDate;
 
+/**
+ * Дто для регистрации нового игрока
+ */
 public class RequestPlayerDto {
     /**
      * Имя игрока
