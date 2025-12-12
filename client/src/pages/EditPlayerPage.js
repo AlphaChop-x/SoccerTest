@@ -27,7 +27,6 @@ const EditPlayerPage = () => {
         try {
             let teamNameToUse = formData.teamName;
 
-            // если введена новая команда — создаём её
             if (newTeam.trim()) {
                 await api.post('/api/teams', { teamName: newTeam });
                 setTeams([...teams, { teamName: newTeam }]);

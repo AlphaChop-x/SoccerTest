@@ -1,5 +1,6 @@
 package org.example.soccerplayerscatalog30.controller;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.example.soccerplayerscatalog30.controller.dto.PlayerMapper;
 import org.example.soccerplayerscatalog30.controller.dto.PlayerFieldsActualizer;
@@ -46,6 +47,7 @@ public class PlayerController {
      *
      * @return {@code List<ResponsePlayerDto>} список всех игроков
      */
+    @Transactional
     @GetMapping
     public List<ResponsePlayerDto> getAllPlayers() {
         return playerService.findAll()
@@ -58,6 +60,7 @@ public class PlayerController {
      * @param playerId уникальный идентификатор игрока
      * @return возвращается {@link ResponsePlayerDto} дто с данными о игроке
      */
+    @Transactional
     @GetMapping("/{playerId}")
     public ResponsePlayerDto getPlayer(
             @PathVariable Long playerId
@@ -78,6 +81,7 @@ public class PlayerController {
      * @param newPlayer дто для регистрации нового пользователя
      * @return возвращает id созданного пользователя
      */
+    @Transactional
     @PostMapping
     public String addPlayer(
             @Valid @RequestBody RequestPlayerDto newPlayer
@@ -104,6 +108,7 @@ public class PlayerController {
      * @param updateDto дто с обновлёнными полями пользователя
      * @return возвращает обновлённого игрока
      */
+    @Transactional
     @PatchMapping("/{playerId}")
     public ResponsePlayerDto patchPlayer(
             @PathVariable Long playerId,
@@ -124,5 +129,16 @@ public class PlayerController {
         fieldsActualizer.actualizeFields(player, updateDto, team);
 
         return playerMapper.convertToResponseFromEntity(playerService.update(player));
+    }
+
+    @Transactional
+    @DeleteMapping("/{playerId}")
+    public void deletePlayer(
+            @PathVariable Long playerId
+    ) {
+        FootballPlayer player = playerService.getPlayerById(playerId).orElseThrow(
+                () -> new CustomNotExistException("Такой игрок не существует!")
+        );
+        playerService.deletePlayer(player);
     }
 }

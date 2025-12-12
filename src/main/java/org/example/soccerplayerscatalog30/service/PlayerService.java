@@ -58,7 +58,22 @@ public class PlayerService {
         return playerRepository.save(player);
     }
 
+    /**
+     * Метод для обновления полей игрока
+     *
+     * @param updatedPlayer игрок с обновлёнными полями
+     * @return возвращает сущность обновлённого игрока
+     */
     public FootballPlayer update(FootballPlayer updatedPlayer) {
         return playerRepository.save(updatedPlayer);
+    }
+
+    /**
+     * Метод для удаления игрока
+     *
+     * @param player игрок, которого нужно удалить
+     */
+    public void deletePlayer(FootballPlayer player) {
+        playerRepository.delete(player);
     }
 }
