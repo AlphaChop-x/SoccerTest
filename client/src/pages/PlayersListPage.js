@@ -6,9 +6,13 @@ const PlayersListPage = () => {
     const [players, setPlayers] = useState([]);
     const navigate = useNavigate();
     const handleDelete = async (id) => {
-        await api.delete("/api/players/" + id);
+        const ok = window.confirm('Точно удалить игрока?');
+        if (!ok) return;
+
+        await api.delete('/api/players/' + id);
         setPlayers((prev) => prev.filter((p) => p.id !== id));
-    }
+    };
+
 
     useEffect(() => {
         api.get('/api/players').then((res) => setPlayers(res.data));

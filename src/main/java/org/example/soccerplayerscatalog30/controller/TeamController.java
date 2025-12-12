@@ -1,5 +1,6 @@
 package org.example.soccerplayerscatalog30.controller;
 
+import jakarta.transaction.Transactional;
 import org.example.soccerplayerscatalog30.controller.dto.TeamMapper;
 import org.example.soccerplayerscatalog30.controller.dto.request.RequestTeamDto;
 import org.example.soccerplayerscatalog30.controller.dto.response.ResponseTeamDto;
@@ -30,6 +31,7 @@ public class TeamController {
      * @return {@link FootballTeam cсозданная команда}
      */
     @PostMapping()
+    @Transactional
     public FootballTeam addTeam(
             @RequestBody RequestTeamDto requestTeamDto) {
         return teamService.createTeam(requestTeamDto.getTeamName());

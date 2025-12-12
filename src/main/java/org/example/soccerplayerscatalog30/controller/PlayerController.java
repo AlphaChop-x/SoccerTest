@@ -14,6 +14,7 @@ import org.example.soccerplayerscatalog30.entity.entityEnums.State;
 import org.example.soccerplayerscatalog30.exception.custom.CustomNotExistException;
 import org.example.soccerplayerscatalog30.service.PlayerService;
 import org.example.soccerplayerscatalog30.service.TeamService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,7 +61,6 @@ public class PlayerController {
      * @param playerId уникальный идентификатор игрока
      * @return возвращается {@link ResponsePlayerDto} дто с данными о игроке
      */
-    @Transactional
     @GetMapping("/{playerId}")
     public ResponsePlayerDto getPlayer(
             @PathVariable Long playerId
@@ -118,10 +118,6 @@ public class PlayerController {
         FootballTeam team = teamService.findTeamByName(updateDto.getTeamName())
                 .orElseGet(() -> teamService.createTeam(updateDto.getTeamName()));
 
-        if (team == null) {
-            team = teamService.createTeam(updateDto.getTeamName());
-        }
-
         FootballPlayer player = playerService.getPlayerById(playerId)
                 .orElseThrow(() -> new CustomNotExistException(
                         "Игрока с таким id: %d не существует".formatted(playerId)));
@@ -131,8 +127,14 @@ public class PlayerController {
         return playerMapper.convertToResponseFromEntity(playerService.update(player));
     }
 
+    /**
+     * Метод для удаления пользователя
+     *
+     * @param playerId уникальный идентификатор удаляемого пользователя
+     */
     @Transactional
     @DeleteMapping("/{playerId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePlayer(
             @PathVariable Long playerId
     ) {
