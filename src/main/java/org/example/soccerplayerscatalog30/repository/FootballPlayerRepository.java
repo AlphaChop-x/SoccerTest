@@ -1,10 +1,11 @@
 package org.example.soccerplayerscatalog30.repository;
 
 import org.example.soccerplayerscatalog30.entity.FootballPlayer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,6 +35,6 @@ public interface FootballPlayerRepository extends CrudRepository<FootballPlayer,
     /**
      * Находит всех игроков в футбол
      */
-    List<FootballPlayer> findAll();
+    Page<FootballPlayer> findAll(Pageable pageable);
 
 }

@@ -3,9 +3,12 @@ package org.example.soccerplayerscatalog30.service;
 import org.example.soccerplayerscatalog30.entity.FootballPlayer;
 import org.example.soccerplayerscatalog30.exception.custom.CustomEntityExistException;
 import org.example.soccerplayerscatalog30.repository.FootballPlayerRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,12 +33,15 @@ public class PlayerService {
     }
 
     /**
-     * Метод для получения всех зарегистрированых игроков
+     * Метод для получения части списка всех игроков
      *
-     * @return список всех игроков
+     * @param page номер страницы
+     * @param size размер страницы
+     * @return страница с игроками
      */
-    public List<FootballPlayer> findAll() {
-        return playerRepository.findAll();
+    public Page<FootballPlayer> getPlayers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
+        return playerRepository.findAll(pageable);
     }
 
     /**

@@ -14,10 +14,9 @@ import org.example.soccerplayerscatalog30.entity.entityEnums.State;
 import org.example.soccerplayerscatalog30.exception.custom.CustomNotExistException;
 import org.example.soccerplayerscatalog30.service.PlayerService;
 import org.example.soccerplayerscatalog30.service.TeamService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Контроллер для работы с игроками
@@ -44,15 +43,18 @@ public class PlayerController {
     }
 
     /**
-     * Метод для получения списка всех игроков
+     * Метод для получения списка игроков постранично
      *
-     * @return {@code List<ResponsePlayerDto>} список всех игроков
+     * @return {@code Page<ResponsePlayerDto>} список игроков
      */
     @Transactional
     @GetMapping
-    public List<ResponsePlayerDto> getAllPlayers() {
-        return playerService.findAll()
-                .stream().map(playerMapper::convertToResponseFromEntity).toList();
+    public Page<ResponsePlayerDto> getPlayers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size
+    ) {
+        return playerService.getPlayers(page, size)
+                .map(playerMapper::convertToResponseFromEntity);
     }
 
     /**
